@@ -1,0 +1,41 @@
+---
+title: "Get Tweets"
+author: "Amit Kapoor"
+date: "6 July 2015"
+output: html_document
+---
+
+# Acquire the Data
+
+We are going to use the twitter to get all the beats1play. This may sound counter-intuitive but it seems like the easiest way. Courtesy [Beats1Plays](https://twitter.com/Beats1Plays) twitter account which seems to run off a ruby script developed by [callumj on github](https://github.com/callumj/beats1). 
+
+Lets use twitteR to get all the tweets from @Beats1Plays account. Now the Twitter APi has a limit of 3200 latest tweets from any user account. See more details at this link -  https://dev.twitter.com/rest/reference/get/statuses/user_timeline
+
+This could potentially be an issue - so lets do a back of the envelope calculation to see how many days of plays will be there in 3200 tweets. At 3.5 to 4 mins per song play, we should have about ~ 400 songs per day (24 * 60 / 3.5 ). So with 3200 tweets is equal to nearly 8 days of plays. So even if we run the script once every week we should be fine.
+
+```{r}
+# Getting started with TwitteR
+library(twitteR)
+library(httr)
+library(stringr)
+  
+setup_twitter_oauth(getOption("consumerKey"), 
+                    getOption("consumerSecret"), 
+                    getOption("accessToken"), 
+                    getOption("accessTokenSecret"))
+
+# Get the user timeline for all the songs played
+tweets <- userTimeline("Beats1Plays", n = 3200,
+                      includeRts = FALSE, excludeReplies = TRUE)
+
+# Apply method to change the tweets into data frame
+# http://stackoverflow.com/questions/14678172/converting-twitter-results-to-data-frame
+tweets.df <- do.call("rbind", lapply(tweets, as.data.frame))
+
+# Get the last tweet time, convert it to dashes format and save to file
+maxtime <- as.character(max(tweets.df$created))
+maxtime <- str_replace_all(maxtime,"[ :]", "-")
+file <- paste0("data/tweetsdb-",maxtime,".csv")
+write.csv(tweets.df, file = file)
+```
+
