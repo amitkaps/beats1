@@ -1,0 +1,46 @@
+---
+title: "Refine the Tweets"
+author: "Amit Kapoor"
+date: "6 July 2015"
+output: html_document
+---
+
+Let's clean the data frame to get the song, artist and url information from the database
+
+```{r}
+library(stringr)
+library(lubridate)
+library(dplyr)
+
+df <- read.csv("data/tweetsdb-2015-07-06-12-15-46.csv",header = TRUE)
+str(df)
+
+# Make tweet text as character and fix created time format
+df$text <- as.character(df$text)
+df$created <- ymd_hms(df$created)
+str(df)
+
+# Remove #beats1 from all the text
+df$text.tidier <- str_replace_all(df$text, "#beats1", "")
+
+# Extract the url and remove from the list
+df$url <- str_extract(df$text.tidier, "https://t.co/[\\w]+")
+df$text.tidier <- str_replace_all(df$text.tidier, 
+                                  "https://t.co/[\\w]+", "")
+
+# Lets get the song and artist name
+# http://stackoverflow.com/questions/24496378/r-using-str-split-and-unlist-to-create-two-columns
+# df$song <- str_split(df$text.tidier, "-", n = 2)
+
+df$song <- sapply(strsplit(as.character(df$text.tidier), "-"), "[", 1)
+df$artist <- sapply(strsplit(as.character(df$text.tidier), "-"), "[", 2)
+
+# Remove whitespace from the string
+df$song <- str_trim(df$song)
+df$artist <- str_trim(df$artist)
+
+# Save a smaller data frame
+df.small <- df %>%
+            select(created, song, artist, url, text)
+write.csv(df.small, "data/tweets_processed.csv", row.names = FALSE)
+```

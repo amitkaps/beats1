@@ -1,0 +1,21 @@
+---
+title: "Explore the Beats Play"
+author: "Amit Kapoor"
+date: "6 July 2015"
+output: html_document
+---
+
+Lets start exploring the data and see if we can see some trends, patterns and even exception.
+
+```{r}
+library(dplyr)
+
+plays <- read.csv("data/tweets_processed.csv")
+
+# Top Plays by artist
+plays.top <- plays %>%
+              group_by(artist) %>%
+              summarize(count = n()) %>%
+              arrange(desc(count))
+plays.top
+```
