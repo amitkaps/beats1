@@ -12,7 +12,7 @@ library(stringr)
 library(lubridate)
 library(dplyr)
 
-df <- read.csv("data/tweetsdb-2015-07-06-12-15-46.csv",header = TRUE)
+df <- read.csv("data/tweetsdb-2015-07-06-21-40-02.csv",header = TRUE)
 str(df)
 
 # Make tweet text as character and fix created time format
@@ -35,11 +35,11 @@ df$text.tidier <- str_replace_all(df$text.tidier,
 df$song <- sapply(strsplit(as.character(df$text.tidier), "-"), "[", 1)
 df$artist <- sapply(strsplit(as.character(df$text.tidier), "-"), "[", 2)
 
-# Remove trailing and after whitespace from song and artist name
-df$song <- str_trim(df$song)
-df$artist <- str_trim(df$artist)
+# Remove whitespace and format from song and artist name
+df$song <- str_to_title(str_trim(df$song))
+df$artist <- str_to_title(str_trim(df$artist))
 
-# Create clean song-artist combo
+# Create clean song-artist combo with lower case
 df$song.artist <- paste0(df$song, " - ", df$artist)
 
 ```
@@ -49,10 +49,16 @@ There is one more clean up we need to do. The urls are missing for some of the s
 ```{r}
 # Fill the missing url 
 # First create a lookup table where the urls are available
+# Note: One potential issue is  that t.co link can shorten the same link in # to two different short links. Need to keep only one.
 df.match <- df %>%
             select(song.artist, url.raw) %>%
             filter(!is.na(url.raw)) %>%
-            unique()
+            distinct(song.artist)
+
+# Ensure there is only one of them
+df.match.count <- df.match %>% 
+                  group_by(song.artist) %>%
+                  tally(sort = TRUE)
 
 names(df.match)[2] <- "url"
 
@@ -60,16 +66,15 @@ names(df.match)[2] <- "url"
 df.full <- left_join(df, df.match, by="song.artist")
 ```
 
-Lets now save the data a smaller data frame of what we want - created, song, artist, and url.
+Lets now save the data into a smaller data frame of what we want - created, song, artist, song.artist and url.
 
 ```{r}
 # Save a smaller data frame
 df.small <- df.full %>%
-            select(created, song, artist, url)
+            select(created, song, artist, song.artist, url)
 write.csv(df.small, "data/tweets_processed.csv", row.names = FALSE)
 
 ```
-
 
 
 

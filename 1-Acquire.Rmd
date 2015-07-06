@@ -29,7 +29,6 @@ setup_twitter_oauth(getOption("consumerKey"),
 # Get the user timeline for all the songs played
 tweets <- userTimeline("Beats1Plays", n = 3200,
                       includeRts = FALSE, excludeReplies = TRUE)
-tweets.df <- twListToDF(tweets)
 
 # Apply method to change the tweets into data frame
 # http://stackoverflow.com/questions/14678172/converting-twitter-results-to-data-frame

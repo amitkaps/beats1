@@ -11,7 +11,10 @@ Lets start exploring the data and see if we can see some trends, patterns and ev
 # Load the data and libraries
 library(dplyr)
 library(ggplot2)
+library(scales)
+
 plays <- read.csv("data/tweets_processed.csv")
+plays$created <- ymd_hms(plays$created)
 ```
 
 Top 10 plays by artist
@@ -24,18 +27,45 @@ plays.top.artist <- plays %>%
 plays.top.artist
 ```
 
-Top 10 plays by song
+Top plays by song
 ```{r}
 # Top Plays by song & artist
 plays.top.song  <- plays %>%
-                   group_by(song, artist, url) %>%
+                   group_by(song.artist) %>%
                    summarize(song.count = n()) %>%
                    ungroup() %>%
                    arrange(desc(song.count))
 plays.top.song
 ```
 
+Lets plot this and start to see...
+
 ```{r}
 ggplot(plays.top.song) + aes(song.count) + geom_histogram()
+              
+plays.top.song.time <- inner_join(plays, plays.top.song[1:20,],
+                                  by = "song.artist")
+
+ggplot(plays.top.song.time) + aes(x = created, y = song.artist) +
+    geom_point(size = 5, alpha = 0.75) + 
+    scale_x_datetime()
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
