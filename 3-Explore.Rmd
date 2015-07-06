@@ -1,21 +1,41 @@
 ---
-title: "Explore the Beats Play"
+title: "Explore the Plays"
 author: "Amit Kapoor"
 date: "6 July 2015"
 output: html_document
 ---
 
-Lets start exploring the data and see if we can see some trends, patterns and even exception.
+Lets start exploring the data and see if we can see some trends, patterns and even exceptions.
 
 ```{r}
+# Load the data and libraries
 library(dplyr)
-
+library(ggplot2)
 plays <- read.csv("data/tweets_processed.csv")
+```
 
+Top 10 plays by artist
+```{r}
 # Top Plays by artist
-plays.top <- plays %>%
-              group_by(artist) %>%
-              summarize(count = n()) %>%
-              arrange(desc(count))
-plays.top
+plays.top.artist <- plays %>%
+                    group_by(artist) %>%
+                    summarize(count = n()) %>%
+                    arrange(desc(count))
+plays.top.artist
+```
+
+Top 10 plays by song
+```{r}
+# Top Plays by song & artist
+plays.top.song  <- plays %>%
+                   group_by(song, artist, url) %>%
+                   summarize(song.count = n()) %>%
+                   ungroup() %>%
+                   arrange(desc(song.count))
+plays.top.song
+```
+
+```{r}
+ggplot(plays.top.song) + aes(song.count) + geom_histogram()
+
 ```

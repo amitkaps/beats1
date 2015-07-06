@@ -1,5 +1,5 @@
 ---
-title: "Refine the Tweets"
+title: "Refine the Plays"
 author: "Amit Kapoor"
 date: "6 July 2015"
 output: html_document
@@ -24,7 +24,7 @@ str(df)
 df$text.tidier <- str_replace_all(df$text, "#beats1", "")
 
 # Extract the url and remove from the list
-df$url <- str_extract(df$text.tidier, "https://t.co/[\\w]+")
+df$url.raw <- str_extract(df$text.tidier, "https://t.co/[\\w]+")
 df$text.tidier <- str_replace_all(df$text.tidier, 
                                   "https://t.co/[\\w]+", "")
 
@@ -35,12 +35,46 @@ df$text.tidier <- str_replace_all(df$text.tidier,
 df$song <- sapply(strsplit(as.character(df$text.tidier), "-"), "[", 1)
 df$artist <- sapply(strsplit(as.character(df$text.tidier), "-"), "[", 2)
 
-# Remove whitespace from the string
+# Remove trailing and after whitespace from song and artist name
 df$song <- str_trim(df$song)
 df$artist <- str_trim(df$artist)
 
-# Save a smaller data frame
-df.small <- df %>%
-            select(created, song, artist, url, text)
-write.csv(df.small, "data/tweets_processed.csv", row.names = FALSE)
+# Create clean song-artist combo
+df$song.artist <- paste0(df$song, " - ", df$artist)
+
 ```
+
+There is one more clean up we need to do. The urls are missing for some of the songs observations and avaiable in some other ones. We need to find those missing urls and populate them (where available).
+
+```{r}
+# Fill the missing url 
+# First create a lookup table where the urls are available
+df.match <- df %>%
+            select(song.artist, url.raw) %>%
+            filter(!is.na(url.raw)) %>%
+            unique()
+
+names(df.match)[2] <- "url"
+
+# Join the data frame with left join to get urls
+df.full <- left_join(df, df.match, by="song.artist")
+```
+
+Lets now save the data a smaller data frame of what we want - created, song, artist, and url.
+
+```{r}
+# Save a smaller data frame
+df.small <- df.full %>%
+            select(created, song, artist, url)
+write.csv(df.small, "data/tweets_processed.csv", row.names = FALSE)
+
+```
+
+
+
+
+
+
+
+
+
