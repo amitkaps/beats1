@@ -12,6 +12,7 @@ Lets start exploring the data and see if we can see some trends, patterns and ev
 library(dplyr)
 library(ggplot2)
 library(scales)
+library(lubridate)
 
 plays <- read.csv("data/tweets_processed.csv")
 plays$created <- ymd_hms(plays$created)
@@ -20,35 +21,43 @@ plays$created <- ymd_hms(plays$created)
 Top 10 plays by artist
 ```{r}
 # Top Plays by artist
-plays.top.artist <- plays %>%
-                    group_by(artist) %>%
-                    summarize(count = n()) %>%
-                    arrange(desc(count))
-plays.top.artist
+plays.artist <- plays %>%
+                group_by(artist) %>%
+                summarize(count = n()) %>%
+                arrange(desc(count))
+plays.artist
 ```
 
 Top plays by song
 ```{r}
 # Top Plays by song & artist
-plays.top.song  <- plays %>%
-                   group_by(song.artist) %>%
+plays.song  <- plays %>%
+                   group_by(songartist) %>%
                    summarize(song.count = n()) %>%
                    ungroup() %>%
                    arrange(desc(song.count))
-plays.top.song
+plays.song
 ```
 
 Lets plot this and start to see...
 
 ```{r}
-ggplot(plays.top.song) + aes(song.count) + geom_histogram()
-              
-plays.top.song.time <- inner_join(plays, plays.top.song[1:20,],
-                                  by = "song.artist")
+# Spread of the plays
+ggplot(plays.song) + aes(song.count) + geom_histogram(binwidth = 1)
 
-ggplot(plays.top.song.time) + aes(x = created, y = song.artist) +
-    geom_point(size = 5, alpha = 0.75) + 
-    scale_x_datetime()
+# Top 25 most played songs
+plays.top25 <- plays.song[1:25,]
+plays.count25 <- inner_join(plays, plays.top25,
+                                  by = "songartist")
+write.csv(plays.count25, "data/plays.count25.csv", row.names = FALSE)
+
+# Top 25 most played songs - when?
+ggplot(plays.count25) + 
+  aes(x = created, y = reorder(songartist, song.count)) +
+  geom_point(size = 5, alpha = 0.75) + 
+  scale_x_datetime() + 
+  xlab("Day") + ylab("Song - Artist")
+  scale_y_discrete(labels = song)
 
 ```
 

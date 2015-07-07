@@ -40,7 +40,7 @@ df$song <- str_to_title(str_trim(df$song))
 df$artist <- str_to_title(str_trim(df$artist))
 
 # Create clean song-artist combo with lower case
-df$song.artist <- paste0(df$song, " - ", df$artist)
+df$songartist <- paste0(df$song, " - ", df$artist)
 
 ```
 
@@ -51,19 +51,19 @@ There is one more clean up we need to do. The urls are missing for some of the s
 # First create a lookup table where the urls are available
 # Note: One potential issue is  that t.co link can shorten the same link in # to two different short links. Need to keep only one.
 df.match <- df %>%
-            select(song.artist, url.raw) %>%
+            select(songartist, url.raw) %>%
             filter(!is.na(url.raw)) %>%
-            distinct(song.artist)
+            distinct(songartist)
 
 # Ensure there is only one of them
 df.match.count <- df.match %>% 
-                  group_by(song.artist) %>%
+                  group_by(songartist) %>%
                   tally(sort = TRUE)
 
 names(df.match)[2] <- "url"
 
 # Join the data frame with left join to get urls
-df.full <- left_join(df, df.match, by="song.artist")
+df.full <- left_join(df, df.match, by="songartist")
 ```
 
 Lets now save the data into a smaller data frame of what we want - created, song, artist, song.artist and url.
@@ -71,7 +71,7 @@ Lets now save the data into a smaller data frame of what we want - created, song
 ```{r}
 # Save a smaller data frame
 df.small <- df.full %>%
-            select(created, song, artist, song.artist, url)
+            select(created, song, artist, songartist, url)
 write.csv(df.small, "data/tweets_processed.csv", row.names = FALSE)
 
 ```
