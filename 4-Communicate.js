@@ -6,7 +6,7 @@ var x = d3.time.scale.utc()
           .range([0, width]);
 
 var y = d3.scale.ordinal()
-        .rangeRoundBands([height, 0], .1);
+        .rangeRoundBands([height, 0]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -51,8 +51,8 @@ d3.csv("dataset.csv", function(dataset) {
     .data(dataset)
     .enter().append("circle")
     .attr("class", "circle")
-    .attr("x", function(d) { return x(d.created); })
-    .attr("y", function(d) { return y(d.songartist); })
+    .attr("cx", function(d) { return x(d.created); })
+    .attr("cy", function(d) { return y(d.songartist); })
     .attr("r", 5);
 
 });
