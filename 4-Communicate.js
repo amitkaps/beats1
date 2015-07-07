@@ -6,11 +6,12 @@ var x = d3.time.scale.utc()
           .range([0, width]);
 
 var y = d3.scale.ordinal()
-        .rangeRoundBands([height, 0]);
+        .rangeRoundBands([0, height]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
-    .orient("bottom");
+    .orient("bottom")
+    .tickFormat(d3.time.format("%H"));;
 
 var yAxis = d3.svg.axis()
     .scale(y)
@@ -47,10 +48,10 @@ d3.csv("dataset.csv", function(dataset) {
     .attr("class", "y axis")
     .call(yAxis);
 
-  chart.selectAll(".circle")
+  chart.selectAll(".dot")
     .data(dataset)
     .enter().append("circle")
-    .attr("class", "circle")
+    .attr("class", "dot")
     .attr("cx", function(d) { return x(d.created); })
     .attr("cy", function(d) { return y(d.songartist); })
     .attr("r", 5);
