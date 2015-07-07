@@ -49,7 +49,7 @@ ggplot(plays.song) + aes(song.count) + geom_histogram(binwidth = 1)
 plays.top25 <- plays.song[1:25,]
 plays.count25 <- inner_join(plays, plays.top25,
                                   by = "songartist")
-write.csv(plays.count25, "data/plays.count25.csv", row.names = FALSE)
+write.csv(plays.count25, "dataset.csv", row.names = FALSE)
 
 # Top 25 most played songs - when?
 ggplot(plays.count25) + 

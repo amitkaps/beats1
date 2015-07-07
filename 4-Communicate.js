@@ -24,7 +24,7 @@ var chart = d3.select(".chart")
 
 var parseDate = d3.time.format.utc("%Y-%m-%d %H:%M:%S").parse;
 
-d3.csv("/data/plays.count25.csv", function(dataset) {
+d3.csv("dataset.csv", function(dataset) {
 
   dataset.forEach(function(d) {
      d.created = parseDate(d.created);
