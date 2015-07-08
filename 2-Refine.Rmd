@@ -12,7 +12,7 @@ library(stringr)
 library(lubridate)
 library(dplyr)
 
-df <- read.csv("data/tweetsdb-2015-07-06-21-40-02.csv",header = TRUE)
+df <- read.csv("data/tweetsdb-2015-07-08-19-07-29.csv",header = TRUE)
 str(df)
 
 # Make tweet text as character and fix created time format

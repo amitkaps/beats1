@@ -45,19 +45,36 @@ Lets plot this and start to see...
 # Spread of the plays
 ggplot(plays.song) + aes(song.count) + geom_histogram(binwidth = 1)
 
-# Top 25 most played songs
-plays.top25 <- plays.song[1:25,]
+# Top 20 most played songs
+plays.top25 <- plays.song[1:20,]
 plays.count25 <- inner_join(plays, plays.top25,
                                   by = "songartist")
 write.csv(plays.count25, "dataset.csv", row.names = FALSE)
 
-# Top 25 most played songs - when?
+# Top 20 most played songs - when?
 ggplot(plays.count25) + 
   aes(x = created, y = reorder(songartist, song.count)) +
   geom_point(size = 5, alpha = 0.75) + 
   scale_x_datetime() + 
   xlab("Day") + ylab("Song - Artist")
-  scale_y_discrete(labels = song)
+
+
+# Top 40 songs played
+plays.top40 <- plays.song[1:40,]
+plays.rest40 <- plays.song[-(1:40),]
+
+# Sample Stats 
+
+total.songs <- dim(plays.song)[1]
+total.plays <- dim(plays)[1]
+total.plays.top40 <- sum(plays.top40$song.count)
+total.plays.rest40 <- sum(plays.rest40$song.count)
+
+total.songs
+total.plays
+total.plays.top40
+total.plays.rest40
+total.plays.top40 + total.plays.rest40
 
 ```
 
