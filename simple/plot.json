@@ -1,0 +1,191 @@
+{
+ "geoms": {
+ "geom1_point_plot": {
+ "geom": "point",
+"classed": "geom1_point_plot",
+"aes": [],
+"params": {
+ "na.rm": false,
+"size":      5,
+"alpha":   0.75 
+},
+"subset_order": [],
+"types": {
+ "x": "numeric",
+"y": "numeric",
+"PANEL": "integer" 
+},
+"PANEL": 1,
+"chunks": 1,
+"total": 1,
+"chunk_order": [],
+"nest_order": [] 
+} 
+},
+"selectors": [],
+"plots": {
+ "plot": {
+ "strips": {
+ "top": [
+ "" 
+],
+"right": [
+ "" 
+],
+"n": {
+ "top":      0,
+"right":      0 
+} 
+},
+"layout": {
+ "PANEL": [ 1 ],
+"ROW": [ 1 ],
+"COL": [ 1 ],
+"SCALE_X": [ 1 ],
+"SCALE_Y": [ 1 ],
+"AXIS_X": [ true ],
+"AXIS_Y": [ true ],
+"coord_fixed": [ false ],
+"width_proportion": [      1 ],
+"height_proportion": [      1 ] 
+},
+"geoms": [
+ "geom1_point_plot" 
+],
+"panel_background": {
+ "fill": "#E5E5E5",
+"colour": "transparent",
+"size": null,
+"linetype": "solid" 
+},
+"panel_border": [],
+"grid_major": {
+ "colour": "#FFFFFF",
+"size":      1,
+"linetype": "solid",
+"lineend": null,
+"loc": {
+ "x": {
+ "Jul 03": 0.24085,
+"Jul 05": 0.48777,
+"Jul 07": 0.7347,
+"Jul 09": 0.98162 
+},
+"y": [ 0.029703, 0.079208, 0.12871, 0.17822, 0.22772, 0.27723, 0.32673, 0.37624, 0.42574, 0.47525, 0.52475, 0.57426, 0.62376, 0.67327, 0.72277, 0.77228, 0.82178, 0.87129, 0.92079, 0.9703 ] 
+} 
+},
+"grid_minor": {
+ "colour": "#F2F2F2",
+"size":   0.25,
+"linetype": "solid",
+"lineend": null,
+"loc": {
+ "x": [ 0.11739, 0.36431, 0.61124, 0.85816 ] 
+} 
+},
+"axis1": {
+ "x": {
+ "Jul 03": 0.24085,
+"Jul 05": 0.48777,
+"Jul 07": 0.7347,
+"Jul 09": 0.98162 
+},
+"xlab": [
+ "Jul 03",
+"Jul 05",
+"Jul 07",
+"Jul 09" 
+],
+"xrange": [ 1.4357e+09, 1.4364e+09 ],
+"xline": true,
+"xticks": true,
+"y": [
+ 0.029703,
+0.079208,
+0.12871,
+0.17822,
+0.22772,
+0.27723,
+0.32673,
+0.37624,
+0.42574,
+0.47525,
+0.52475,
+0.57426,
+0.62376,
+0.67327,
+0.72277,
+0.77228,
+0.82178,
+0.87129,
+0.92079,
+0.9703 
+],
+"ylab": [
+ "Beautiful Life (Feat Action Bronson &Amp; Joey Bada$$) - Statik Selektah",
+"Don't - Bryson Tiller",
+"Powerful (Feat. Ellie Goulding &Amp; Tarrus Riley) - Major Lazer",
+"We Run The Block - Bonkaz",
+"House Every Weekend - David Zowie",
+"Bad Blood (Feat. Kendrick Lamar) - Taylor Swift",
+"Good For You (Feat. A$Ap Rocky) - Selena Gomez",
+"Holding On (Feat. Sam Dew) - Julio Bashmore",
+"Let It Go - James Bay",
+"Cha Cha - D.R.A.M.",
+"Freedom - Pharrell Williams",
+"Holding On (Feat. Gregory Porter) - Disclosure",
+"Pedestrian At Best - Courtney Barnett",
+"Trap Queen - Fetty Wap",
+"Don't Wanna Fight - Alabama Shakes",
+"Where Are Ü Now (With Justin Bieber) - Skrillex &Amp; Diplo",
+"Alright - Kendrick Lamar",
+"Dreams - Beck",
+"Little Monster - Royal Blood",
+"Can't Feel My Face - The Weeknd" 
+],
+"yrange": [    0.4,   20.6 ],
+"yline": true,
+"yticks": true 
+},
+"xtitle": "Day",
+"xanchor": "middle",
+"xangle":      0,
+"ytitle": "Song - Artist",
+"yanchor": "end",
+"yangle":      0,
+"xlabs": [
+ "Jul 03",
+"Jul 05",
+"Jul 07",
+"Jul 09" 
+],
+"ylabs": [
+ "Beautiful Life (Feat Action Bronson &Amp; Joey Bada$$) - Statik Selektah",
+"Don't - Bryson Tiller",
+"Powerful (Feat. Ellie Goulding &Amp; Tarrus Riley) - Major Lazer",
+"We Run The Block - Bonkaz",
+"House Every Weekend - David Zowie",
+"Bad Blood (Feat. Kendrick Lamar) - Taylor Swift",
+"Good For You (Feat. A$Ap Rocky) - Selena Gomez",
+"Holding On (Feat. Sam Dew) - Julio Bashmore",
+"Let It Go - James Bay",
+"Cha Cha - D.R.A.M.",
+"Freedom - Pharrell Williams",
+"Holding On (Feat. Gregory Porter) - Disclosure",
+"Pedestrian At Best - Courtney Barnett",
+"Trap Queen - Fetty Wap",
+"Don't Wanna Fight - Alabama Shakes",
+"Where Are Ü Now (With Justin Bieber) - Skrillex &Amp; Diplo",
+"Alright - Kendrick Lamar",
+"Dreams - Beck",
+"Little Monster - Royal Blood",
+"Can't Feel My Face - The Weeknd" 
+],
+"legend": {},
+"options": {
+ "width":    400,
+"height":    400 
+} 
+} 
+} 
+}

@@ -12,7 +12,7 @@ library(stringr)
 library(lubridate)
 library(dplyr)
 
-df <- read.csv("data/tweetsdb-2015-07-08-19-07-29.csv",header = TRUE)
+df <- read.csv("data/tweetsdb-2015-08-14-02-11-16.csv",header = TRUE)
 str(df)
 
 # Make tweet text as character and fix created time format
@@ -24,9 +24,9 @@ str(df)
 df$text.tidier <- str_replace_all(df$text, "#beats1", "")
 
 # Extract the url and remove from the list
-df$url.raw <- str_extract(df$text.tidier, "https://t.co/[\\w]+")
+df$url.raw <- str_extract(df$text.tidier, "Http://t.co/[\\w]+")
 df$text.tidier <- str_replace_all(df$text.tidier, 
-                                  "https://t.co/[\\w]+", "")
+                                  "Http://t.co/[\\w]+", "")
 
 # Lets get the song and artist name
 # http://stackoverflow.com/questions/24496378/r-using-str-split-and-unlist-to-create-two-columns

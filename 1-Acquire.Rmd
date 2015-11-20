@@ -15,8 +15,9 @@ This could potentially be an issue - so lets do a back of the envelope calculati
 
 ```{r}
 # Getting started with TwitteR
-library(twitteR)
 library(httr)
+library(devtools)
+library(twitteR)
 library(stringr)
   
 # Save the twitter tokens in the .Rprofile using options()

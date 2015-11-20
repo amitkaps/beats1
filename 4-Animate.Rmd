@@ -1,0 +1,30 @@
+---
+title: "Animate the Data"
+author: "Amit Kapoor"
+date: "10 July 2015"
+output: html_document
+---
+
+Let us use animint to animate this data
+
+```{r}
+library(lubridate)
+plays.count25  <- read.csv("dataset.csv")
+plays.count25$created <- ymd_hms(plays.count25$created)
+```
+
+Create an animation server
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Top 20 most played songs - when?
+p2 <- ggplot(plays.count25) +
+  aes(x = created, y = reorder(songartist, count)) +
+  geom_point(size = 5, alpha = 0.75) +
+  scale_x_datetime() +
+  xlab("Day") + ylab("Song - Artist")
+
+library("animint")
+animint2dir(list(plot = p2), out.dir = "simple", open.browser = FALSE)
+
+```

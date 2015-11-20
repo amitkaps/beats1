@@ -35,10 +35,12 @@ d3.csv("dataset.csv", function(dataset) {
   console.log(x(parseDate("2015-07-06 21:40:02")));
           //    - parseDate("2015-07-06 21:44:02"));
 
-  d3.descending(y, function(d) { return d.song.count; });
-
   x.domain([d3.min(dataset, function(d) { return d.created; }),
             d3.max(dataset, function(d) { return d.created; })]);
+
+  var sortByCount = function (a, b) {
+    return a.count < b.count?-1:1;
+  };
 
   y.domain(dataset.map(function(d) { return d.songartist; }));
 
